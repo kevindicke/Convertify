@@ -17,11 +17,22 @@ struct ContentView: View {
     let volumeUnits = ["Celsius", "Fahrenheit", "Kelvin"]
     
     var convertified : String {
+        let doubleTemp = Float(temp) ?? 0
         var results = ""
         if firstUnit == secondUnit {
             results = temp
-        } else if true {
-            
+        } else if firstUnit == 0 && secondUnit == 1 {
+            return String((doubleTemp * 1.8) + 32)
+        } else if firstUnit == 0 && secondUnit == 2 {
+            return String(doubleTemp + 273.15)
+        } else if firstUnit == 1 && secondUnit == 0 {
+            return String((doubleTemp - 32) / 1.8)
+        } else if firstUnit == 1 && secondUnit == 2 {
+            return String((((doubleTemp - 32) * 5) / 9) + 273.15)
+        } else if firstUnit == 2 && secondUnit == 0 {
+            return String(doubleTemp - 273.15)
+        } else if firstUnit == 2 && secondUnit == 1 {
+            return String(((doubleTemp - 273.15) * 1.8) + 32)
         }
         return results
     }
@@ -29,8 +40,8 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
             Form{
-                Section(header: Text("Temperture to convertify")){
-                     TextField("Temperture", text: $temp)
+                Section(header: Text("Temperature to convertify")){
+                     TextField("Temperature", text: $temp)
                         .keyboardType(.decimalPad)
                 }
                 Section(header: Text("From")){
